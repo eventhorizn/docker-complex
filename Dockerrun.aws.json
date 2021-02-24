@@ -24,7 +24,7 @@
 		},
 		{
 			"name": "nginx",
-			"image": "eventhorizn/multi-ngnix",
+			"image": "eventhorizn/multi-nginx",
 			"hostname": "ngnix",
 			"essential": true,
 			"portMappings": [
