@@ -1,0 +1,36 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [
+		{
+			"name": "client",
+			"image": "eventhorizn/multi-client",
+			"hostname": "client",
+			"essential": false
+		},
+		{
+			"name": "server",
+			"image": "eventhorizn/multi-server",
+			"hostname": "api",
+			"essential": false
+		},
+		{
+			"name": "worker",
+			"image": "eventhorizn/multi-worker",
+			"hostname": "worker",
+			"essential": false
+		},
+		{
+			"name": "nginx",
+			"image": "eventhorizn/multi-ngnix",
+			"hostname": "ngnix",
+			"essential": true,
+			"portMappings": [
+				{
+					"hostPort": 80,
+					"containerPort": 80
+				}
+			],
+			"links": ["client", "server"]
+		}
+	]
+}
