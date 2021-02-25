@@ -1,25 +1,27 @@
 sudo: required
+language: generic
+
 services:
   - docker
 
 before_install:
-  - docker build -t eventhorizn/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t cygnetops/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true eventhorizn/react-test npm test -- --coverage
+  - docker run -e CI=true cygnetops/react-test npm test
 
 after_success:
-  - docker build -t eventhorizn/multi-client ./client
-  - docker build -t eventhorizn/multi-nginx ./nginx
-  - docker build -t eventhorizn/multi-server ./server
-  - docker build -t eventhorizn/multi-worker ./worker
-  # Log in to docker CLI
+  - docker build -t cygnetops/multi-client-10-14 ./client
+  - docker build -t cygnetops/multi-nginx-10-14 ./nginx
+  - docker build -t cygnetops/multi-server-10-14 ./server
+  - docker build -t cygnetops/multi-worker-10-14 ./worker
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take images and push them to docker hub
-  - docker push eventhorizn/multi-client
-  - docker push eventhorizn/multi-nginx
-  - docker push eventhorizn/multi-server
-  - docker push eventhorizn/multi-worker
+  # Take those images and push them to docker hub
+  - docker push cygnetops/multi-client-10-14
+  - docker push cygnetops/multi-nginx-10-14
+  - docker push cygnetops/multi-server-10-14
+  - docker push cygnetops/multi-worker-10-14
 
 deploy:
   provider: elasticbeanstalk
